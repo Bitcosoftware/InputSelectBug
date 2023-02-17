@@ -1,0 +1,58 @@
+﻿@page "/"
+@using System.Diagnostics;
+
+<PageTitle>Index</PageTitle>
+
+<EditForm EditContext="MyContext">
+    <div class="row mb-3">
+        <div class="col mt-2">
+            <div class="alert alert-danger mt-3" role="alert">
+                InputSelect Bug (or funky feature): Click on the Show all Calendars check box to change the available items to choose from in the InputSelect.  The InputSelect is bound to the Calendar_Name of the currentCalendar object and populated with the list of Calendar objects.
+                When checked, a new list of items is created, but the selected item in the drop-down changes (see below, Current Calendar).  The bound data does not change.  It seems that the Drop-down
+                is based on the ordinal position of the items, not the bound value.
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-auto fw-bold">
+            Calendar:
+        </div>
+        <div class="col">
+            <InputSelect @bind-Value="@currentCalendar.Calendar_Name" class="w-100">
+                @foreach (var item in myCalendars)
+                {
+                    <option value="@item.Calendar_Name">@item.Calendar_Name</option>
+                }
+            </InputSelect>
+        </div>
+        <div class="row mb-3">
+            <div class="col mt-2">
+                <InputCheckbox @bind-Value="showAllCalendars"></InputCheckbox>
+                <label>Show All Calendars</label>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col fw-bold">
+                <div class="alert alert-danger" role="alert">
+                    This value is the currentCalendar Calendar_Name object.  It never changes. When changing the Calendar list.  This is the value the InputSelect is bound to.
+                </div>
+                Current Calendar: @currentCalendar.Calendar_Name  -- This is the current selected calendar
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="alert alert-danger" role="alert">
+                    This is the current Calendar list which is displayed above in the Drop-down.
+                </div>
+                <h3>Current List Of Calendars</h3>
+                <ul>
+                    @foreach (var item in myCalendars)
+                    {
+                        <li>@item.Calendar_Name - @item.Calendar_Group</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</EditForm>
+
